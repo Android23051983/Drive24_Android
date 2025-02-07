@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     long userId = 0;
 
     TextView tvUserInfo;
-    Button rent, exit;
+    Button rent, exit, loginBtn, loginBtnLand;
     String role;
     UserProfile context;
     ClientCars clientCars;
@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvUserInfo = findViewById(R.id.tv_user_info);
-        Button loginBtn = findViewById(R.id.loginBtn);
-        Button loginBtnLand = findViewById(R.id.loginBtnLand);
+        loginBtn = findViewById(R.id.loginBtn);
+        loginBtnLand = findViewById(R.id.loginBtnLand);
         rent = findViewById(R.id.userData);
         databaseHelper = new DatabaseHelper(this);
         sdk = YandexAuthSdk.create(new YandexAuthOptions(getApplicationContext()));
@@ -198,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
         tvUserInfo.setText(contextResult);
         rent.setEnabled(true);
         exit.setEnabled(true);
+        loginBtn.setEnabled(false);
+        loginBtnLand.setEnabled(false);
         if(Objects.equals(role, "Клиент")) {
             FutureTask<List<ClientCars>> futureTaskClientCars = new FutureTask<>(new Callable<List<ClientCars>>() {
                 @Override
@@ -340,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
         byte[] postData = jsonData.getBytes(StandardCharsets.UTF_8); // Преобразуем JSON-объект в byte
         Log.d("MainActivity", jsonData);
         try {
-            URL url = new URL("https://www.websitedevel.ru/user/read_client_data.php");
+            URL url = new URL("https://www.websitedevel.ru/server/user/read_client_data.php");
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
@@ -412,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
         byte[] postData = jsonData.getBytes(StandardCharsets.UTF_8); // Преобразуем JSON-объект в byte
         Log.d("MainActivity", jsonData);
         try {
-            URL url = new URL("https://www.websitedevel.ru/user/read_landlord_data.php");
+            URL url = new URL("https://www.websitedevel.ru/server/user/read_landlord_data.php");
             connection = (HttpsURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoInput(true);
